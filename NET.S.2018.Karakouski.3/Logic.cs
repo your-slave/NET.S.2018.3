@@ -15,14 +15,17 @@ namespace NET.S._2018.Karakouski._3
         /// <param name="root"></param>
         /// <param name="tolerance"></param>
         /// <returns></returns>
-        public static double FindNthRoot(double number, int root, double tolerance)
+        public static double FindNthRoot(double number, int root, double tolerance=0.001)
         {
 
-        if (tolerance < 0)
-            throw new ArgumentException(nameof(tolerance));
-  
+            if (tolerance < 0)
+                throw new ArgumentException(nameof(tolerance));
+
+            if (root < 0)
+                throw new ArgumentException(nameof(root));
+
             double estimation = number;
-            for (int i=0; i < 1000000000 && Math.Abs(Math.Abs(Math.Pow(estimation, root)) - number) > tolerance; i++)
+            for (int i=0; true && Math.Abs(Math.Pow(estimation, root) - number) > tolerance; i++) ///1000000000 limit for possible infinite or close to infinite loops
                 estimation = (number / Math.Pow(estimation, root - 1) + (estimation*(root-1))) / (root);
 
             return estimation;
